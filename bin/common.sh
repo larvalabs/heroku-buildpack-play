@@ -111,11 +111,13 @@ install_play()
 
   echo "-----> Installing Play! $VER_TO_INSTALL....."
 
-  status=$(curl --retry 3 --silent --head -w %{http_code} -L ${PLAY_URL} -o /dev/null)
+  status=$(curl --retry 3 -s --max-time 150 -w %{http_code} -L $PLAY_URL -o $PLAY_TAR_FILE)
   if [ "$status" != "200" ]; then
+    echo "-----> Could not download $VER_TO_INSTALL from provided custom URL, trying to download official release....."
     download_play_official ${VER_TO_INSTALL} ${PLAY_TAR_FILE}
   else
-    curl --retry 3 -s --max-time 150 -L $PLAY_URL -o $PLAY_TAR_FILE
+    # curl --retry 3 -s --max-time 150 -L $PLAY_URL -o $PLAY_TAR_FILE
+    echo "-----> Version $VER_TO_INSTALL downloaded successfully from custom url."
   fi
 
   if [ ! -f $PLAY_TAR_FILE ]; then
