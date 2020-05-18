@@ -38,12 +38,16 @@ download_play_official() {
   local playVersion=${1}
   local playTarFile=${2}
   local playZipFile="play-${playVersion}.zip"
+  #https://github.com/larvalabs/play1/releases/download/1.5.3.larva/play-1.5.3.larva.zip
+  #https://github.com/larvalabs/play1/releases/download/1.5.3.larva/play-1.5.3.larva.zip
   local playUrl="https://github.com/larvalabs/play1/releases/download/${playVersion}/${playZipFile}"
 
-  status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -O)
+  echo "Downloading custom play build from ${playUrl}..."
+
+  status=$(curl --retry 3 --silent -w %{http_code} -L ${playUrl} -O)
   if [ "$status" != "200" ]; then
     error "Could not locate: ${playUrl}
-Please check that the version ${playVersion} is correct in your conf/dependencies.yml"
+Please check that the version ${playVersion} is correct in your conf/dependencies.yml - status ${status}"
     exit 1
   else
     echo "Downloaded ${playZipFile} from Github releases." | indent
