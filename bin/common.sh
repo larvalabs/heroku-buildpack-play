@@ -38,15 +38,15 @@ download_play_official() {
   local playVersion=${1}
   local playTarFile=${2}
   local playZipFile="play-${playVersion}.zip"
-  local playUrl="https://downloads.typesafe.com/play/${playVersion}/${playZipFile}"
+  local playUrl="https://github.com/larvalabs/play1/releases/download/${playVersion}/${playZipFile}"
 
-  status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -o /dev/null)
+  status=$(curl --retry 3 --silent --head -w %{http_code} -L ${playUrl} -O)
   if [ "$status" != "200" ]; then
     error "Could not locate: ${playUrl}
 Please check that the version ${playVersion} is correct in your conf/dependencies.yml"
     exit 1
   else
-    echo "Downloading ${playZipFile} from https://downloads.typesafe.com" | indent
+    echo "Downloaded ${playZipFile} from Github releases." | indent
     curl --retry 3 -s -O -L ${playUrl}
   fi
 
@@ -104,20 +104,18 @@ https://devcenter.heroku.com/articles/scala-support"
 install_play()
 {
   VER_TO_INSTALL=$1
-  PLAY_URL="https://github.com/larvalabs/play1/releases/download/$VER_TO_INSTALL/play-$VER_TO_INSTALL.zip"
+  PLAY_URL="https://s3.amazonaws.com/heroku-jvm-langpack-play/play-heroku-$VER_TO_INSTALL.tar.gz"
   PLAY_TAR_FILE="play-heroku.tar.gz"
 
   validate_play_version ${VER_TO_INSTALL}
 
   echo "-----> Installing Play! $VER_TO_INSTALL....."
 
-  status=$(curl --retry 3 -s --max-time 150 -w %{http_code} -L $PLAY_URL -o $PLAY_TAR_FILE)
+  status=$(curl --retry 3 --silent --head -w %{http_code} -L ${PLAY_URL} -o /dev/null)
   if [ "$status" != "200" ]; then
-    echo "-----> Could not download $VER_TO_INSTALL from provided custom URL, trying to download official release....."
     download_play_official ${VER_TO_INSTALL} ${PLAY_TAR_FILE}
   else
-    # curl --retry 3 -s --max-time 150 -L $PLAY_URL -o $PLAY_TAR_FILE
-    echo "-----> Version $VER_TO_INSTALL downloaded successfully from custom url."
+    curl --retry 3 -s --max-time 150 -L $PLAY_URL -o $PLAY_TAR_FILE
   fi
 
   if [ ! -f $PLAY_TAR_FILE ]; then
