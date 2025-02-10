@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 # bin/compile <build-dir> <cache-dir> <env-dir>
 
-rm -f /usr/bin/python
-ln -s /usr/bin/python2 /usr/bin/python
-
 # Parse args
 BUILD_DIR=$1
 CACHE_DIR=$2
