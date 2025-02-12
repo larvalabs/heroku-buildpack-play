@@ -133,6 +133,9 @@ Please review Dev Center for a list of supported versions."
   fi
   tar xzmf $PLAY_TAR_FILE
   rm $PLAY_TAR_FILE
+  for file in *; do
+    echo "$file"
+  done
   echo "-----> Moving $VER_TO_INSTALL to $PLAY_PATH ..."
   mv $VER_TO_INSTALL $PLAY_PATH
   chmod +x $PLAY_PATH/play
