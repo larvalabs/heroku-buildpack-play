@@ -137,7 +137,7 @@ Please review Dev Center for a list of supported versions."
     echo "$file"
   done
   echo "-----> Moving $VER_TO_INSTALL to $PLAY_PATH ..."
-  mv $VER_TO_INSTALL $PLAY_PATH
+  mv play-$VER_TO_INSTALL $PLAY_PATH
   chmod +x $PLAY_PATH/play
   echo "Done installing Play!" | indent
 }
