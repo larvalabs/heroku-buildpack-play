@@ -104,7 +104,7 @@ https://devcenter.heroku.com/articles/scala-support"
 install_play()
 {
   local playVersion=${1}
-  local playTarFile=${2}
+  local playTarFile="play-${playVersion}.tar.gz"
   local playZipFile="play-${playVersion}.zip"
   VER_TO_INSTALL=$1
   PLAY_URL="https://github.com/larvalabs/play1/releases/download/${playVersion}/${playTarFile}"
