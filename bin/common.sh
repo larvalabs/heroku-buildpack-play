@@ -109,7 +109,7 @@ install_play()
 
   validate_play_version ${VER_TO_INSTALL}
 
-  echo "-----> Installing Play! $VER_TO_INSTALL....."
+  echo "-----> Installing Play! $VER_TO_INSTALL from $PLAY_URL ....."
 
   status=$(curl --retry 3 --max-time 150 --silent -w %{http_code} -L ${PLAY_URL} -o $PLAY_TAR_FILE)
   if [ "$status" != "200" ]; then
