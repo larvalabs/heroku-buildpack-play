@@ -104,7 +104,7 @@ https://devcenter.heroku.com/articles/scala-support"
 install_play()
 {
   VER_TO_INSTALL=$1
-  PLAY_URL="https://github.com/larvalabs/play1/releases/download/1.5.3.larva/play-1.5.x-1.5.3.larva.tar.gz"
+  PLAY_URL="https://github.com/larvalabs/play1/releases/download/${playVersion}/${playTarFile}"
   PLAY_TAR_FILE="play-heroku.tar.gz"
 
   validate_play_version ${VER_TO_INSTALL}
